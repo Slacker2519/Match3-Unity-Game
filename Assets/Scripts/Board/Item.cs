@@ -37,6 +37,31 @@ public class Item
         }
 
         View = obj.transform;
+        SetSkin(name);
+    }
+
+    protected virtual void SetSkin(NormalItem.eNormalType name)
+    {
+        SpriteRenderer visual = View.GetComponent<SpriteRenderer>();
+        DataAssets data = Resources.Load<DataAssets>(Constants.DATA_ASSETS_PATH);
+        GameSettings settings = Resources.Load<GameSettings>(Constants.GAME_SETTINGS_PATH);
+
+        if (!visual)
+        {
+            View.gameObject.AddComponent<SpriteRenderer>();
+            visual = View.GetComponent<SpriteRenderer>();
+        }
+        else
+        {
+            ItemDataAssets item = data.ItemDataAssetsList.Find(x => x.Name == name.ToString());
+
+            if (item != null)
+            {
+                var skin = item.SkinList.Find(x => x.Type == settings.Skin);
+                Sprite sprite = skin.Visual;
+                visual.sprite = sprite;
+            }
+        }
     }
 
     public virtual void SetView(BonusItem.eBonusType name)
@@ -49,6 +74,30 @@ public class Item
 
         GameObject obj = PoolManager.Instance.SpawnItem(name);
         View = obj.transform;
+        SetSkin(name);
+    }
+
+    protected virtual void SetSkin(BonusItem.eBonusType name)
+    {
+        SpriteRenderer visual = View.GetComponent<SpriteRenderer>();
+        DataAssets data = Resources.Load<DataAssets>(Constants.DATA_ASSETS_PATH);
+
+        if (!visual)
+        {
+            View.gameObject.AddComponent<SpriteRenderer>();
+            visual = View.GetComponent<SpriteRenderer>();
+        }
+        else
+        {
+            ItemDataAssets item = data.ItemDataAssetsList.Find(x => x.Name == name.ToString());
+
+            if (item != null)
+            {
+                var skin = item.SkinList.Find(x => x.Type == SkinEnum.Bonus);
+                Sprite sprite = skin.Visual;
+                visual.sprite = sprite;
+            }
+        }
     }
 
     protected virtual string GetPrefabName() { return string.Empty; }
