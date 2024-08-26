@@ -101,7 +101,7 @@ public class Board
                 }
 
                 item.SetType(Utils.GetRandomNormalTypeExcept(types.ToArray()));
-                item.SetView();
+                item.SetView(item.ItemType);
                 item.SetViewRoot(m_root);
 
                 cell.Assign(item);
@@ -148,7 +148,7 @@ public class Board
                 NormalItem item = new NormalItem();
 
                 item.SetType(Utils.GetRandomNormalType());
-                item.SetView();
+                item.SetView(item.ItemType);
                 item.SetViewRoot(m_root);
 
                 cell.Assign(item);
@@ -272,6 +272,9 @@ public class Board
             case eMatchDirection.VERTICAL:
                 item.SetType(BonusItem.eBonusType.VERTICAL);
                 break;
+            default:
+                item.SetType(BonusItem.eBonusType.ALL);
+                break;
         }
 
         if (item != null)
@@ -282,7 +285,7 @@ public class Board
                 cellToConvert = matches[rnd];
             }
 
-            item.SetView();
+            item.SetView(item.ItemType);
             item.SetViewRoot(m_root);
 
             cellToConvert.Free();
@@ -669,7 +672,7 @@ public class Board
                 Cell cell = m_cells[x, y];
                 cell.Clear();
 
-                GameObject.Destroy(cell.gameObject);
+                GameObject.Destroy(cell.gameObject, 1);
                 m_cells[x, y] = null;
             }
         }

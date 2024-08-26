@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a6d555a774f9eb47bfa28fb76812ed5, type: 3}
+  m_Name: DataAssets
+  m_EditorClassIdentifier: 
+  _itemDataAssetsList:
+  - _type: 0
+    _name: TYPE_ONE
+    _prefab: {fileID: 1645311756642076403, guid: 42636182d7ad561418687da1a9301f13,
+      type: 3}
+    _skinList:
+    - _type: 0
+      _visual: {fileID: 21300000, guid: e5fea27bcfb023d4fa4f7b314a1e468f, type: 3}
+    - _type: 1
+      _visual: {fileID: 21300000, guid: c12cdac060bca1648873faff065f85e8, type: 3}
+  - _type: 0
+    _name: TYPE_TWO
+    _prefab: {fileID: 1645311756642076403, guid: c02be8d33867e784787a1db70d743e36,
+      type: 3}
+    _skinList:
+    - _type: 0
+      _visual: {fileID: 21300000, guid: fa170d4df6f61ca4d87906fecd033754, type: 3}
+    - _type: 1
+      _visual: {fileID: 21300000, guid: b3d03f60a408b6149ba58fff7af8beef, type: 3}
+  - _type: 0
+    _name: TYPE_THREE
+    _prefab: {fileID: 1645311756642076403, guid: c3334ca92edd09f4b83b6df9783252fa,
+      type: 3}
+    _skinList:
+    - _type: 0
+      _visual: {fileID: 21300000, guid: ad0255438bdaee746942172f60838326, type: 3}
+    - _type: 1
+      _visual: {fileID: 21300000, guid: a3dbc24d17c9ee04b93384880a8f7f48, type: 3}
+  - _type: 0
+    _name: TYPE_FOUR
+    _prefab: {fileID: 1645311756642076403, guid: 5ccf5b053fc1fe1499d69d9d384cd695,
+      type: 3}
+    _skinList:
+    - _type: 0
+      _visual: {fileID: 21300000, guid: 5ead70314c8057e4fbad1171b57e2285, type: 3}
+    - _type: 1
+      _visual: {fileID: 21300000, guid: 3bbd6a925d3f3c44aa3642011798e97a, type: 3}
+  - _type: 0
+    _name: TYPE_FIVE
+    _prefab: {fileID: 1645311756642076403, guid: 8a5f83856079b5c4b8a0c1b6bd4a199e,
+      type: 3}
+    _skinList:
+    - _type: 0
+      _visual: {fileID: 21300000, guid: 4aade970bd310bf41999ff1d6929698d, type: 3}
+    - _type: 1
+      _visual: {fileID: 21300000, guid: 23d4fceb15264594fbd2e61365bdeac4, type: 3}
+  - _type: 0
+    _name: TYPE_SIX
+    _prefab: {fileID: 1645311756642076403, guid: acd51b1157b037f478be336b1e22b029,
+      type: 3}
+    _skinList:
+    - _type: 0
+      _visual: {fileID: 21300000, guid: 9155563869121a64691c05bc3ca52e14, type: 3}
+    - _type: 1
+      _visual: {fileID: 21300000, guid: e27dc4b27cd098d4cb090fa15c2521a3, type: 3}
+  - _type: 0
+    _name: TYPE_SEVEN
+    _prefab: {fileID: 1645311756642076403, guid: 866d4248d2e1fad418c1e4c0566ae0a3,
+      type: 3}
+    _skinList:
+    - _type: 0
+      _visual: {fileID: 21300000, guid: 7164e9eb7829dfb4595431d2eb01fc76, type: 3}
+    - _type: 1
+      _visual: {fileID: 21300000, guid: d4e64b790654a1f45a578702cbc7475e, type: 3}
+  - _type: 1
+    _name: HORIZONTAL
+    _prefab: {fileID: 1645311756642076403, guid: 3e0cdf80cfc4e074c9a3869cdfef4706,
+      type: 3}
+    _skinList:
+    - _type: 2
+      _visual: {fileID: 21300000, guid: a6793917698d3194c89d642f239ee160, type: 3}
+  - _type: 1
+    _name: VERTICAL
+    _prefab: {fileID: 1645311756642076403, guid: c534205f8cc27344aad63065ee7a5fda,
+      type: 3}
+    _skinList:
+    - _type: 2
+      _visual: {fileID: 21300000, guid: e6d222f59eea2c442879b019185454eb, type: 3}
+  - _type: 1
+    _name: ALL
+    _prefab: {fileID: 1645311756642076403, guid: 2c96327079b89c44ca4c716fca6dd7bb,
+      type: 3}
+    _skinList:
+    - _type: 2
+      _visual: {fileID: 21300000, guid: d7048b7b19e3543408d95e06436ae3d7, type: 3}

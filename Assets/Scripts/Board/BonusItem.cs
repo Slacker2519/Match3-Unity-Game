@@ -55,6 +55,13 @@ public class BonusItem : Item
         base.ExplodeView();
     }
 
+    internal override void ExplodeView(PoolManager pool)
+    {
+        ActivateBonus();
+
+        base.ExplodeView(pool);
+    }
+
     private void ActivateBonus()
     {
         switch (ItemType)

@@ -26,6 +26,31 @@ public class Item
         }
     }
 
+    public virtual void SetView(NormalItem.eNormalType name)
+    {
+        GameObject obj = PoolManager.Instance.SpawnItem(name);
+
+        if (!obj)
+        {
+            Debug.LogError("failed spawn normal item");
+            return;
+        }
+
+        View = obj.transform;
+    }
+
+    public virtual void SetView(BonusItem.eBonusType name)
+    {
+        if (name == BonusItem.eBonusType.NONE)
+        {
+            Debug.LogWarning("Unsual bonus item happened " + name.ToString());
+            return;
+        }
+
+        GameObject obj = PoolManager.Instance.SpawnItem(name);
+        View = obj.transform;
+    }
+
     protected virtual string GetPrefabName() { return string.Empty; }
 
     public virtual void SetCell(Cell cell)
@@ -108,7 +133,17 @@ public class Item
         }
     }
 
-
+    internal virtual void ExplodeView(PoolManager pool)
+    {
+        if (View)
+        {
+            View.DOScale(0.1f, 0.1f).OnComplete(() =>
+            {
+                pool.ReturnObject(View.gameObject);
+                View = null;
+            });
+        }
+    }
 
     internal void AnimateForHint()
     {
@@ -133,6 +168,17 @@ public class Item
         if (View)
         {
             GameObject.Destroy(View.gameObject);
+            View = null;
+        }
+    }
+
+    internal void Clear(PoolManager pool)
+    {
+        Cell = null;
+
+        if (View)
+        {
+            pool.ReturnObject(View.gameObject);
             View = null;
         }
     }

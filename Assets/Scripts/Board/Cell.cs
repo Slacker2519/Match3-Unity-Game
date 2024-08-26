@@ -58,7 +58,7 @@ public class Cell : MonoBehaviour
     {
         if (Item != null)
         {
-            Item.Clear();
+            Item.Clear(PoolManager.Instance);
             Item = null;
         }
     }
@@ -72,7 +72,7 @@ public class Cell : MonoBehaviour
     {
         if (Item == null) return;
 
-        Item.ExplodeView();
+        Item.ExplodeView(PoolManager.Instance);
         Item = null;
     }
 
