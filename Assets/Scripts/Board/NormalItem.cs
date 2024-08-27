@@ -20,6 +20,7 @@ public class NormalItem : Item
     public void SetType(eNormalType type)
     {
         ItemType = type;
+        Board.OnSpawnNewItem?.Invoke(type);
     }
 
     protected override string GetPrefabName()

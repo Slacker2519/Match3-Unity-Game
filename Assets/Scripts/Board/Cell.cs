@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Cell : MonoBehaviour
@@ -32,6 +33,53 @@ public class Cell : MonoBehaviour
             BoardY == other.BoardY && Mathf.Abs(BoardX - other.BoardX) == 1;
     }
 
+    public List<NormalItem.eNormalType> GetNeighbourItemType()
+    {
+        List<NormalItem.eNormalType> list = new List<NormalItem.eNormalType>();
+
+        if (NeighbourUp != null)
+        {
+            if (NeighbourUp.Item != null)
+            {
+                if (NeighbourRight.Item is NormalItem item)
+                {
+                    list.Add(item.ItemType);
+                }
+            }
+        }
+        if (NeighbourRight != null)
+        {
+            if (NeighbourRight.Item != null)
+            {
+                if (NeighbourRight.Item is NormalItem item)
+                {
+                    list.Add(item.ItemType);
+                }
+            }
+        }
+        if (NeighbourBottom != null)
+        {
+            if (NeighbourBottom.Item != null)
+            {
+                if (NeighbourBottom.Item is NormalItem item)
+                {
+                    list.Add(item.ItemType);
+                }
+            }
+        }
+        if (NeighbourLeft != null)
+        {
+            if (NeighbourLeft.Item != null)
+            {
+                if (NeighbourLeft.Item is NormalItem item)
+                {
+                    list.Add(item.ItemType);
+                }
+            }
+        }
+
+        return list;
+    }
 
     public void Free()
     {
@@ -71,6 +119,11 @@ public class Cell : MonoBehaviour
     internal void ExplodeItem()
     {
         if (Item == null) return;
+
+        if (Item is NormalItem normalItem)
+        {
+            Board.OnDespawnItem?.Invoke(normalItem.ItemType);
+        }
 
         Item.ExplodeView(PoolManager.Instance);
         Item = null;

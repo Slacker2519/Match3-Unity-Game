@@ -15,6 +15,9 @@ public class Board
         ALL
     }
 
+    public static Action<NormalItem.eNormalType> OnSpawnNewItem;
+    public static Action<NormalItem.eNormalType> OnDespawnItem;
+
     private int boardSizeX;
 
     private int boardSizeY;
@@ -24,6 +27,8 @@ public class Board
     private Transform m_root;
 
     private int m_matchMin;
+
+    private List<ItemOnBoard> _listItem = new List<ItemOnBoard>();
 
     public Board(Transform transform, GameSettings gameSettings)
     {
@@ -36,7 +41,48 @@ public class Board
 
         m_cells = new Cell[boardSizeX, boardSizeY];
 
+        if (_listItem.Count <= 0)
+        {
+            Array values = Enum.GetValues(typeof(NormalItem.eNormalType));
+            for (int i = 0; i < values.Length; i++)
+            {
+                NormalItem.eNormalType result = (NormalItem.eNormalType)values.GetValue(i);
+                _listItem.Add(new ItemOnBoard(result, 0));
+            }
+        }
+
+        OnSpawnNewItem += OnSpawnItem;
+        OnDespawnItem += OnDestroyItem;
+
         CreateBoard();
+    }
+
+    private void OnSpawnItem(NormalItem.eNormalType type)
+    {
+        var item = _listItem.Find(x => x.Item == type);
+
+        if (item != null) 
+        { 
+            item.Number++;
+        }
+        else
+        {
+            Debug.LogWarning("List item on board does't contain this type: " +  type);
+        }
+    }
+
+    private void OnDestroyItem(NormalItem.eNormalType type)
+    {
+        var item = _listItem.Find(x => x.Item == type);
+
+        if (item != null)
+        {
+            item.Number--;
+        }
+        else
+        {
+            Debug.LogWarning("List item on board does't contain this type: " + type);
+        }
     }
 
     private void CreateBoard()
@@ -100,7 +146,8 @@ public class Board
                     }
                 }
 
-                item.SetType(Utils.GetRandomNormalTypeExcept(types.ToArray()));
+                NormalItem.eNormalType type = Utils.GetRandomNormalTypeExcept(types.ToArray());
+                item.SetType(type);
                 item.SetView(item.ItemType);
                 item.SetViewRoot(m_root);
 
@@ -146,8 +193,9 @@ public class Board
                 if (!cell.IsEmpty) continue;
 
                 NormalItem item = new NormalItem();
+                NormalItem.eNormalType type = GetNewItemType(cell);
 
-                item.SetType(Utils.GetRandomNormalType());
+                item.SetType(type);
                 item.SetView(item.ItemType);
                 item.SetViewRoot(m_root);
 
@@ -155,6 +203,36 @@ public class Board
                 cell.ApplyItemPosition(true);
             }
         }
+    }
+
+    private NormalItem.eNormalType GetNewItemType(Cell cell)
+    {
+        NormalItem.eNormalType type = Utils.GetRandomNormalType();
+
+        List<NormalItem.eNormalType> neighbourList = cell.GetNeighbourItemType();
+
+        List<NormalItem.eNormalType> typeList =
+            Enum.GetValues(typeof(NormalItem.eNormalType)).Cast<NormalItem.eNormalType>().ToList();
+
+        List<NormalItem.eNormalType> difList = typeList.Where(x => !neighbourList.Contains(x)).ToList();
+
+        if (difList.Count > 0)
+        {
+            List<ItemOnBoard> pickType = new List<ItemOnBoard>();
+            foreach (var i in difList)
+            {
+                pickType.Add(_listItem.Find(x => x.Item == i));
+            }
+
+            if (pickType.Count > 0)
+            {
+                ItemOnBoard i = pickType.OrderBy(x => x.Number).FirstOrDefault();
+                type = i.Item;
+                Debug.Log("not random item");
+            }
+        }
+
+        return type;
     }
 
     internal void ExplodeAllItems()
@@ -665,6 +743,10 @@ public class Board
 
     public void Clear()
     {
+        OnSpawnNewItem -= OnSpawnItem;
+        OnDespawnItem -= OnDestroyItem;
+        _listItem.Clear();
+
         for (int x = 0; x < boardSizeX; x++)
         {
             for (int y = 0; y < boardSizeY; y++)
@@ -676,5 +758,17 @@ public class Board
                 m_cells[x, y] = null;
             }
         }
+    }
+}
+
+public class ItemOnBoard
+{
+    public NormalItem.eNormalType Item;
+    public int Number = 0;
+
+    public ItemOnBoard(NormalItem.eNormalType item, int number)
+    {
+        Item = item;
+        Number = number;
     }
 }
